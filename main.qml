@@ -28,6 +28,20 @@ ApplicationWindow {
         id: swipeView
         anchors.fill: parent
 //        currentIndex: 0
+
+
+        Rectangle {
+            id: firstPage
+//            anchors.fill: parent
+            color: "grey"
+        }
+
+
+        Rectangle {
+            id: secondPage
+//            anchors.fill: parent
+            color: "blue"
+        }
     }
 
 //    footer: TabBar {
