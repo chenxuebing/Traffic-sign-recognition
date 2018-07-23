@@ -4,5 +4,8 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>Header.qml</file>
+        <file>NavigationDrawer.qml</file>
+        <file>Swipe.qml</file>
+        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>

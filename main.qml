@@ -20,27 +20,43 @@ ApplicationWindow {
         }
     }
 
-    header: Header {
-        header_name: "template"
+    onClosing: {
+        if (drawer.opened) {
+            drawer.close()
+            close.accepted = false
+        }
+        else if (swipe_view.visible == false)
+        {
+            header.back_button_alias.clicked()
+            close.accepted = false
+        }
     }
 
-    SwipeView {
-        id: swipeView
-        anchors.fill: parent
-//        currentIndex: 0
+    header: Header {
+        id: header
+        header_name: "Program name"
+    }
 
+    NavigationDrawer {
+        id: drawer
+    }
 
-        Rectangle {
-            id: firstPage
-//            anchors.fill: parent
-            color: "grey"
+    Swipe {
+        id: swipe_view
+        visible: true
+        onVisibleChanged: {
+            if (visible == true)
+                header.header_name = "Swipe page name"
         }
+    }
 
+    SettingsPage {
+        id: settings_page
+        visible: false
 
-        Rectangle {
-            id: secondPage
-//            anchors.fill: parent
-            color: "blue"
+        onVisibleChanged: {
+            if (visible == true)
+                header.header_name = "Settings"
         }
     }
 
