@@ -10,7 +10,8 @@ using namespace cv;
 
 RNG rng(12345);
 
-void check_program_arguments(int argc) {
+void check_program_arguments(int argc)
+{
     if(argc != 2) {
         std::cout << "Error! Program usage:" << std::endl;
         std::cout << "./circle_detect image_circles_path" << std::endl;
@@ -18,13 +19,28 @@ void check_program_arguments(int argc) {
     }   
 }
 
-void check_if_image_exist(const cv::Mat &img, const std::string &path) {
+void check_if_image_exist(const cv::Mat &img, const std::string &path)
+{
     if(img.empty()) {
         std::cout << "Error! Unable to load image: " << path << std::endl;
         std::exit(-1);
     }   
 }
 
+int  it_compare(const Mat &img_1, const Mat &img_2)
+{
+    Mat gray_img_1, gray_img_2, r1, r2;
+    cvtColor(img_1, gray_img_1, CV_BGR2GRAY);
+    cvtColor(img_2, gray_img_2, CV_BGR2GRAY);
+    resize(gray_img_1, r1, Size(100,100));
+    resize(gray_img_2, r2, Size(100,100));
+
+
+    Mat result;
+
+    cv::compare(r1 , r2  , result , cv::CMP_EQ );
+    int percentage  = countNonZero(result);
+}
 
 int main(int argc, char **argv) {
     // Usage: ./circle_detect image_circles_path
@@ -67,13 +83,28 @@ int main(int argc, char **argv) {
     for( size_t i = 0; i< contours.size(); i++ )
     {
         Rect bounding_rect = boundingRect(contours[i]);
-        rectangle(bgr_image, bounding_rect, Scalar(0,255,0),2,8,0);
+        // rectangle(bgr_image, bounding_rect, Scalar(0,255,0),2,8,0);
+
+
+        Mat sub_image(bgr_image(bounding_rect));
+        // std::vector<Mat> HistA = calculate_histogram(sub_image);
+        // std::vector<Mat> HistB = calculate_histogram(cv::imread("ustupi.png"));
+
+        // double res_0 = compareHist(HistA[0], HistB[0], CV_COMP_BHATTACHARYYA); 
+        // double res_1 = compareHist(HistA[1], HistB[1], CV_COMP_BHATTACHARYYA); 
+        // double res_2 = compareHist(HistA[2], HistB[2], CV_COMP_BHATTACHARYYA); 
+
+        std::cout << "Image_" << i << " = " << it_compare(sub_image, cv::imread("ustupi.png")) << std::endl;
+
+
+
+
     }
 
-    cv::namedWindow("Combined threshold images", cv::WINDOW_AUTOSIZE);
-    cv::imshow("Combined threshold images", bgr_image);
+    // cv::namedWindow("Combined threshold images", cv::WINDOW_AUTOSIZE);
+    // cv::imshow("Combined threshold images", bgr_image);
 
-    cv::waitKey(0);
+    // cv::waitKey(0);
 
     
     return 0;
