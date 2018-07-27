@@ -1,6 +1,8 @@
-#include "neuralNet.h"
 #include <iostream>
 #include <fstream>
+
+#include "db/database.hpp"
+#include "neuralNet.hpp"
 
 int main()
 {

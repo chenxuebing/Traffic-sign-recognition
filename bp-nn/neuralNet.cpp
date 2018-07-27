@@ -4,7 +4,7 @@
 #include <math.h>
 #include <cstdlib>
 
-#include "neuralNet.h"
+#include "neuralNet.hpp"
 
 using namespace std;
 
