@@ -1,11 +1,15 @@
 #include <iostream>
 #include <fstream>
 
-#include "db/database.hpp"
+#include "database.hpp"
 #include "neuralNet.hpp"
 
 int main()
 {
+	Data_base db = Data_base::instance();
+
+	return 0;
+
 	neuralNet nn(400,30,10);
 
 	// Test data

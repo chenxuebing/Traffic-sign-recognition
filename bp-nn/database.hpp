@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <opencv2/opencv.hpp>
 
 typedef enum contours_t
 {
@@ -45,3 +46,19 @@ const sign_array_t sign_array = {
     }
 };
 
+class Data_base
+{
+public:
+        static Data_base& instance()
+        {
+                static Data_base i;
+                return i;
+        }
+
+        std::vector<cv::Mat> get_images(std::vector<int> id);
+
+private:        
+        Data_base(){};
+        // Data_base(const Data_base& root) = delete;
+        Data_base& operator=(const Data_base&) = delete;
+};
