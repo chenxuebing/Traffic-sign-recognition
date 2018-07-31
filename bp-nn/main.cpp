@@ -6,7 +6,11 @@
 
 int main()
 {
-	Data_base db = Data_base::instance();
+	std::vector<std::pair<int, cv::Mat>> images;
+
+	images = get_images(red_c);
+
+	std::cout << images.size() << std::endl;
 
 	return 0;
 
