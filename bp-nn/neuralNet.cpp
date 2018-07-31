@@ -11,7 +11,7 @@ using namespace std;
 // Constructor
 neuralNet::neuralNet(int numIn, int numHid, int numOut) : sizeInput(numIn), sizeHidden(numHid), sizeOutput(numOut)
 {
-	learningRate = 0.4;
+	learningRate = 0.01;
 	momentum = 0.8;
 
 	// Allocate neurons
@@ -420,10 +420,11 @@ double* neuralNet::trainLive(double* in, int out)
 	return neuronsOutput;
 }
 
-int neuralNet::classify(double* in)
+std::pair<double, int> neuralNet::classify(double* in)
 {
 	double max = -1.0;
-	int result = 0;
+	double result_percent = -1.0;
+	int result_id = 0;
 
 	feedForward(in);
 
@@ -432,9 +433,10 @@ int neuralNet::classify(double* in)
 		if (neuronsOutput[k] > max)
 		{
 			max = neuronsOutput[k];
-			result = k;
+			result_percent = max;
+			result_id = k;
 		}
 	}
 
-	return result;
+	return std::pair<double, int>(result_percent, result_id);
 }

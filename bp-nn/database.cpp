@@ -46,7 +46,23 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
         }
     }
 
+    images.insert( images.end(), images.begin(), images.end() );
+    images.insert( images.end(), images.begin(), images.end() );
+
     return images;  
 }
 
+double* image_to_array(cv::Mat image)
+{
+    double *output = new double[image.rows * image.cols];
 
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            output[i] = 127.0 / (double)(image.at<uchar>(j,i));
+        }
+    }
+
+    return output;
+}

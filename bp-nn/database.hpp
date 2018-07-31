@@ -47,3 +47,5 @@ const sign_array_t sign_array = {
 };
 
 std::vector<std::pair<int, cv::Mat>> get_images(contours_t color);
+double* image_to_array(cv::Mat image);
+cv::Mat preapere_image(cv::Mat image);

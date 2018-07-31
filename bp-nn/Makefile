@@ -1,6 +1,6 @@
 NAME = train
 
-SRC = main.cpp database.cpp
+SRC = main.cpp database.cpp neuralNet.cpp
 
 OB = $(SRC:.cpp=.o)
 

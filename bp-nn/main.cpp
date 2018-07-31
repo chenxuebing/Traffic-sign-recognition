@@ -6,87 +6,64 @@
 
 int main()
 {
-	std::vector<std::pair<int, cv::Mat>> images;
+    std::vector<std::pair<int, cv::Mat>> images = get_images(red_c);
 
-	images = get_images(red_c);
+    std::size_t count_images = images.size();
 
-	std::cout << images.size() << std::endl;
+    int numIn = 50 * 50;
+    int numHid = 30;
+    int numOut = 4;
+    int maxEpochs = 80;
 
-	return 0;
+    neuralNet nn(numIn, numHid, numOut);
 
-	neuralNet nn(400,30,10);
+    double **input = new double *[count_images];
+    int *output = new int[count_images];
 
-	// Test data
-	double **input; 
-	input = new double *[5000];
-	for(int i = 0; i < 5000; i++)
-		input[i] = new double[400];
-	int *output;
-	output = new int[5000];
+    for(std::size_t i = 0; i < count_images; i++)
+    {
+        input[i] = image_to_array(images[i].second);
+        output[i] = images[i].first;
+    }
+    
+    nn.trainBatch(input,output, count_images, maxEpochs);
 
-	// Load test data
-	std::fstream inputs, outputs;
-	inputs.open("input.txt", std::ios::in);
-	outputs.open("output.txt", std::ios::in);
+    // Saving weights
+    nn.saveWeights("weights.dat");
 
-	for (int i = 0; i < 5000; i++)
-	{
-		for (int j = 0; j < 400; j++)
-			inputs >> input[i][j];
-		outputs >> output[i];
-	}
+    // Loading weights
+    // nn.loadWeights("weights.dat");
 
-	inputs.close();
-	outputs.close();
+    // Testing some outputs
+    int correct = 0;
+    int incorrect = 0;
 
-	// Training
-	// ---
+    for(std::size_t i = 0; i < count_images; i++)
+    {
+        if (output[i] == nn.classify(input[i]).second)
+            correct++;
+         if (nn.classify(input[i]).first < 0.5)
+            incorrect++;
+    }
 
-	// Batch training
-	nn.trainBatch(input,output,5000,20);
+    std::cout << "correct: " << correct << " / " << count_images << " (id != res)" << std::endl;
+    std::cout << "incorrect: " << incorrect << " / " << count_images << " (percent < 50%)" << std::endl;
 
-	// Live training
-	/*
-	double* results = new double[10];
-	double max = -1;
-	int ans = 0;
-	double acc = 0;
-	for (int i = 0; i < 5000; i++)
-	{
-		results = nn.trainLive(input[i],output[i]);
-		for (int j = 0; j < 10; j++)
-		{
-			if (results[j] > max)
-			{
-				max = results[j];
-				ans = j;
-			}
-		}
-		if (ans == output[i])
-			acc += 1.0;
-	}
-	acc = acc / 5000.0 * 100.0;
-	cout << "Live training accuracy: " << acc << endl;
-	*/
+    for(int i = 0; i < count_images; i++)
+        delete[] input[i];
+    delete[] input;
+    delete[] output;
 
-	// Save/Load
-	// ---
+    {
+        std::cout << "Test recognition" << std::endl;
 
-	// Saving weights
-	nn.saveWeights("weights.dat");
+        cv::Mat cv_image = cv::imread("../tsr/ustupi.png", CV_LOAD_IMAGE_GRAYSCALE);
+        cv::Mat cv_resize_image;
 
-	// Loading weights
-	nn.loadWeights("weights.dat");
+        cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
+    
+        std::cout << "percent: " << nn.classify(image_to_array(cv_resize_image)).first << " id: " << nn.classify(image_to_array(cv_resize_image)).second << std::endl;
+    }
 
-	// Testing some outputs
-	std::cout << "Value: " << output[20] << ", Result: " << nn.classify(input[20]) << std::endl;
-	std::cout << "Value: " << output[300] << ", Result: " << nn.classify(input[300]) << std::endl;
-	std::cout << "Value: " << output[2500] << ", Result: " << nn.classify(input[2500]) << std::endl;
-	std::cout << "Value: " << output[4800] << ", Result: " << nn.classify(input[4800]) << std::endl;
-
-	for(int i = 0; i < 5000; i++)
-		delete[] input[i];
-	delete[] input;
-	delete[] output;
-	return 0;
+    return 0;
 }

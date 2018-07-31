@@ -20,7 +20,7 @@ class neuralNet
 
         void trainBatch(double** inputs, int* outputs, int numTests, int maxEpochs);
         double* trainLive(double* in, int out);
-        int classify(double* in);
+        std::pair<double, int> classify(double* in);
 
     private:
         // Layer Sizes - Set at initialization
