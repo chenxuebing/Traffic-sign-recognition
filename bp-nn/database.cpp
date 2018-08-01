@@ -25,7 +25,7 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
         {
             for (int n = 0; n < 10; n ++)
             {
-                std::string part_name = std::to_string(i->id) + "_0" + std::to_string(n);
+                std::string part_name = std::to_string(i->id) + "_" + std::to_string(n);
 
                 auto it = std::find_if(image_names.begin(), image_names.end(), 
                     [&part_name](std::string const& image_name)
@@ -48,19 +48,22 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
 
     images.insert( images.end(), images.begin(), images.end() );
     images.insert( images.end(), images.begin(), images.end() );
+    images.insert( images.end(), images.begin(), images.end() );
 
     return images;  
 }
 
-double* image_to_array(cv::Mat image)
+float* image_to_array(cv::Mat image)
 {
-    double *output = new double[image.rows * image.cols];
+    float *output = new float[image.rows * image.cols];
+    std::size_t n = 0;
 
     for (int i = 0; i < image.rows; i++)
     {
         for (int j = 0; j < image.cols; j++)
         {
-            output[i] = 127.0 / (double)(image.at<uchar>(j,i));
+            output[n] = 127.0 / static_cast<int>(image.at<uchar>(j,i));
+            n++;
         }
     }
 

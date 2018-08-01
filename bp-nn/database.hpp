@@ -24,6 +24,13 @@ typedef std::vector<Sign_params_t> sign_array_t;
 
 const sign_array_t sign_array = {
     {
+        0,
+        red_c,
+        "Movement without stopping is forbidden",
+        "Движение без остановки запрещено",
+        "Рух без зупинки заборонено"
+    },
+    {
         1,
         red_c,
         "No stopping",
@@ -46,6 +53,7 @@ const sign_array_t sign_array = {
     }
 };
 
+
 std::vector<std::pair<int, cv::Mat>> get_images(contours_t color);
-double* image_to_array(cv::Mat image);
+float* image_to_array(cv::Mat image);
 cv::Mat preapere_image(cv::Mat image);
