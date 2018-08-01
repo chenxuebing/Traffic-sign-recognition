@@ -23,9 +23,10 @@ std::pair<cv::Mat, std::vector<Sign_params_t>> TSR::sign_from_img(cv::Mat bgr_im
         cv::inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(10, 255, 255), lower_color_hue_range);
         cv::inRange(hsv_image, cv::Scalar(160, 100, 100), cv::Scalar(179, 255, 255), upper_color_hue_range);
     }
-    else
+    else if (color == yellow_c)
     {
-        // TODO
+        cv::inRange(hsv_image, cv::Scalar(20, 100, 100), cv::Scalar(30, 255, 255), lower_color_hue_range);
+        cv::inRange(hsv_image, cv::Scalar(20, 100, 100), cv::Scalar(30, 255, 255), upper_color_hue_range);
     }
 
     cv::Mat color_hue_image;
@@ -44,7 +45,7 @@ std::pair<cv::Mat, std::vector<Sign_params_t>> TSR::sign_from_img(cv::Mat bgr_im
         cv::Rect bounding_rect = boundingRect(contours[i]);
         cv::Mat sub_image(bgr_image(bounding_rect));
 
-        if (sub_image.rows > bgr_image.rows / 16)
+        if (sub_image.rows > bgr_image.rows / 32)
         {
             cv::Mat gray_image;
             cv::cvtColor(sub_image, gray_image, CV_BGR2GRAY);
@@ -60,7 +61,7 @@ std::pair<cv::Mat, std::vector<Sign_params_t>> TSR::sign_from_img(cv::Mat bgr_im
 
             std::cout << "percent: " << result_sign.first << " id: " << result_sign.second << std::endl;
 
-            if (result_sign.first > 0.5)
+            if (result_sign.first > 0.57)
             {
                 Sign_params_t sign = param_by_id(result_sign.second);
 
@@ -70,6 +71,8 @@ std::pair<cv::Mat, std::vector<Sign_params_t>> TSR::sign_from_img(cv::Mat bgr_im
             
                 std::cout << ">>> Found: " << sign.ru_name << std::endl;
             }
+
+            // rectangle(bgr_image, bounding_rect, cv::Scalar(0, 255, 0), 2, 8, 0);
         }
     }
 

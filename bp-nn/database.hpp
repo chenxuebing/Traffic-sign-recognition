@@ -6,7 +6,7 @@
 
 #define NUM_IN      50 * 50
 #define NUM_HID     30
-#define NUM_OUT     5
+#define NUM_OUT     7
 #define MAX_EPOCHS  200
 
 typedef enum contours_t
@@ -62,11 +62,24 @@ const sign_array_t sign_array = {
         "No entry",
         "Въезд запрещен",
         "В'їзд заборонено"
-    }
+    },
+    {
+        5,
+        red_c,
+        "No overtaking",
+        "Обгон запрещен",
+        "Обгін заборонено"
+    },
+    {
+        6,
+        yellow_c,
+        "Priority road",
+        "Главная дорога",
+        "Головна дорога"
+    },
 };
 
-
-std::vector<std::pair<int, cv::Mat>>    get_images(contours_t color);
+std::vector<std::pair<int, cv::Mat>>    get_images();
 float*                                  image_to_array(cv::Mat image);
 cv::Mat                                 preapere_image(cv::Mat image);
 Sign_params_t                           param_by_id(int id);

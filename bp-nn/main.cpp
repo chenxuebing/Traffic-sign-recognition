@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv)
 {
-    std::vector<std::pair<int, cv::Mat>> images = get_images(red_c);
+    std::vector<std::pair<int, cv::Mat>> images = get_images();
 
     std::size_t count_images = images.size();
 
