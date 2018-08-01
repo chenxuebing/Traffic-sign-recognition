@@ -1,12 +1,12 @@
 #ifndef NeuralNet
 #define NeuralNet
 
-class neuralNet
+class Neural_net
 {
     public:
         // Constructor and Destructor
-        neuralNet(int numIn, int numHid, int numOut);
-        ~neuralNet();
+        Neural_net(int numIn, int numHid, int numOut);
+        ~Neural_net();
 
         // Saving and Loading
         bool saveWeights(char* outFile);

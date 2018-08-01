@@ -10,12 +10,7 @@ int main(int argc, char** argv)
 
     std::size_t count_images = images.size();
 
-    int numIn = 50 * 50;
-    int numHid = 30;
-    int numOut = 4;
-    int maxEpochs = 200;
-
-    neuralNet nn(numIn, numHid, numOut);
+    Neural_net nn(NUM_IN, NUM_HID, NUM_OUT);
 
     float **input = new float *[count_images];
     int *output = new int[count_images];
@@ -26,7 +21,7 @@ int main(int argc, char** argv)
         output[i] = images[i].first;
     }
     
-    nn.trainBatch(input,output, count_images, maxEpochs);
+    nn.trainBatch(input,output, count_images, MAX_EPOCHS);
 
     nn.saveWeights("weights.dat");
 
@@ -55,11 +50,7 @@ int main(int argc, char** argv)
 
 int test_main(int argc, char** argv)
 {
-    int numIn = 50 * 50;
-    int numHid = 30;
-    int numOut = 4;
-
-    neuralNet nn(numIn, numHid, numOut);
+    Neural_net nn(NUM_IN, NUM_HID, NUM_OUT);
 
     nn.loadWeights("weights.dat");
 

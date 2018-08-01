@@ -9,7 +9,7 @@
 using namespace std;
 
 // Constructor
-neuralNet::neuralNet(int numIn, int numHid, int numOut) : sizeInput(numIn), sizeHidden(numHid), sizeOutput(numOut)
+Neural_net::Neural_net(int numIn, int numHid, int numOut) : sizeInput(numIn), sizeHidden(numHid), sizeOutput(numOut)
 {
     learningRate = 0.03;
     momentum = 0.4;
@@ -73,7 +73,7 @@ neuralNet::neuralNet(int numIn, int numHid, int numOut) : sizeInput(numIn), size
 }
 
 // Destructor
-neuralNet::~neuralNet()
+Neural_net::~Neural_net()
 {
     for (int i = 0; i <= sizeInput; i++)
     {
@@ -103,7 +103,7 @@ neuralNet::~neuralNet()
     delete[] neuronsOutput;
 }
 
-void neuralNet::initializeWeights()
+void Neural_net::initializeWeights()
 {
     // Range of weights
     float rangeHidden = 1/sqrt((float)sizeInput);
@@ -122,14 +122,14 @@ void neuralNet::initializeWeights()
     }
 }
 
-float neuralNet::activationFunction(float in)
+float Neural_net::activationFunction(float in)
 {
     // Many functions may be used for activation
     // Sigmoid used by default
     return 1.0 / (1.0 + exp(-in));
 }
 
-void neuralNet::feedForward(float* in)
+void Neural_net::feedForward(float* in)
 {
     for (int i = 0; i < sizeInput; i++)
     {
@@ -151,27 +151,27 @@ void neuralNet::feedForward(float* in)
     }
 }
 
-void neuralNet::setLearningRate(float lr)
+void Neural_net::setLearningRate(float lr)
 {
     learningRate = lr;
 }
 
-void neuralNet::setMomentum(float m)
+void Neural_net::setMomentum(float m)
 {
     momentum = m;
 }
 
-float neuralNet::getLearningRate()
+float Neural_net::getLearningRate()
 {
     return learningRate;
 }
 
-float neuralNet::getMomentum()
+float Neural_net::getMomentum()
 {
     return momentum;
 }
 
-bool neuralNet::saveWeights(char* outFile)
+bool Neural_net::saveWeights(char* outFile)
 {
     fstream output;
     output.open(outFile, ios::out);
@@ -207,7 +207,7 @@ bool neuralNet::saveWeights(char* outFile)
     }
 }
 
-bool neuralNet::loadWeights(char* inFile)
+bool Neural_net::loadWeights(char* inFile)
 {
     fstream input;
     input.open(inFile, ios::in);
@@ -253,7 +253,7 @@ bool neuralNet::loadWeights(char* inFile)
     }
 }
 
-void neuralNet::trainBatch(float** inputs, int* outputs, int numTests, int maxEpochs)
+void Neural_net::trainBatch(float** inputs, int* outputs, int numTests, int maxEpochs)
 {
     int training = 0.6 * numTests;
     int generalizing = 0.8 * numTests;
@@ -382,7 +382,7 @@ void neuralNet::trainBatch(float** inputs, int* outputs, int numTests, int maxEp
     return;
 }
 
-float* neuralNet::trainLive(float* in, int out)
+float* Neural_net::trainLive(float* in, int out)
 {
     float sum;
 
@@ -422,7 +422,7 @@ float* neuralNet::trainLive(float* in, int out)
     return neuronsOutput;
 }
 
-std::pair<float, int> neuralNet::classify(float* in)
+std::pair<float, int> Neural_net::classify(float* in)
 {
     float max = -1.0;
     float result_percent = -1.0;

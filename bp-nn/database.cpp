@@ -69,3 +69,22 @@ float* image_to_array(cv::Mat image)
 
     return output;
 }
+
+Sign_params_t param_by_id(int id)
+{
+    Sign_params_t search;
+
+    auto it = std::find_if(sign_array.begin(), sign_array.end(), 
+        [&id](Sign_params_t const& params)
+        { 
+            return params.id == id;
+        }
+    );
+
+    if (it != sign_array.end())
+    {
+        search = *it;
+    }
+
+    return search;
+}
