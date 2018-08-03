@@ -1,56 +1,56 @@
 #ifndef NeuralNet
 #define NeuralNet
 
-class Neural_net
+class neuralNet
 {
     public:
         // Constructor and Destructor
-        Neural_net(int numIn, int numHid, int numOut);
-        ~Neural_net();
+        neuralNet(int numIn, int numHid, int numOut);
+        ~neuralNet();
 
         // Saving and Loading
         bool saveWeights(char* outFile);
         bool loadWeights(char* inFile);
 
         // Training and Classifying
-        void setLearningRate(float lr);
-        void setMomentum(float m);
-        float getLearningRate();
-        float getMomentum();
+        void setLearningRate(double lr);
+        void setMomentum(double m);
+        double getLearningRate();
+        double getMomentum();
 
-        void trainBatch(float** inputs, int* outputs, int numTests, int maxEpochs);
-        float* trainLive(float* in, int out);
-        std::pair<float, int> classify(float* in);
+        void trainBatch(double** inputs, int* outputs, int numTests, int maxEpochs);
+        double* trainLive(double* in, int out);
+        int classify(double* in);
 
     private:
         // Layer Sizes - Set at initialization
         int sizeInput, sizeHidden, sizeOutput;
 
         // Layer Neurons - Dynamically allocated arrays
-        float* neuronsInput;
-        float* neuronsHidden;
-        float* neuronsOutput;
+        double* neuronsInput;
+        double* neuronsHidden;
+        double* neuronsOutput;
 
         // Layer Weights - Dynamically allocated arrays
-        float** weightsInputToHidden;
-        float** weightsHiddenToOutput;
+        double** weightsInputToHidden;
+        double** weightsHiddenToOutput;
 
         // Training Data - Private data used for training
-        float learningRate;
-        float momentum;
+        double learningRate;
+        double momentum;
 
-        float* errorHidden;
-        float* errorOutput;
-        float* idealOutput;
-        float** oldDeltaWeightInputToHidden;
-        float** oldDeltaWeightHiddenToOutput;
-        float** newDeltaWeightInputToHidden;
-        float** newDeltaWeightHiddenToOutput;
+        double* errorHidden;
+        double* errorOutput;
+        double* idealOutput;
+        double** oldDeltaWeightInputToHidden;
+        double** oldDeltaWeightHiddenToOutput;
+        double** newDeltaWeightInputToHidden;
+        double** newDeltaWeightHiddenToOutput;
 
         // Functions - Private member functions
         void initializeWeights();
-        float activationFunction(float in);
-        void feedForward(float* in);
+        double activationFunction(double in);
+        void feedForward(double* in);
 };
 
 #endif

@@ -4,11 +4,6 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-#define NUM_IN      50 * 50
-#define NUM_HID     30
-#define NUM_OUT     7
-#define MAX_EPOCHS  200
-
 typedef enum contours_t
 {
     red_c = 101,
@@ -29,13 +24,6 @@ typedef std::vector<Sign_params_t> sign_array_t;
 
 const sign_array_t sign_array = {
     {
-        0,
-        red_c,
-        "Movement without stopping is forbidden",
-        "Движение без остановки запрещено",
-        "Рух без зупинки заборонено"
-    },
-    {
         1,
         red_c,
         "No stopping",
@@ -55,31 +43,7 @@ const sign_array_t sign_array = {
         "No left turn",
         "Поворот в левую сторону запрещен",
         "Поворот ліворуч заборонено"
-    },
-    {
-        4,
-        red_c,
-        "No entry",
-        "Въезд запрещен",
-        "В'їзд заборонено"
-    },
-    {
-        5,
-        red_c,
-        "No overtaking",
-        "Обгон запрещен",
-        "Обгін заборонено"
-    },
-    {
-        6,
-        yellow_c,
-        "Priority road",
-        "Главная дорога",
-        "Головна дорога"
-    },
+    }
 };
 
-std::vector<std::pair<int, cv::Mat>>    get_images();
-float*                                  image_to_array(cv::Mat image);
-cv::Mat                                 preapere_image(cv::Mat image);
-Sign_params_t                           param_by_id(int id);
+std::vector<std::pair<int, cv::Mat>> get_images(contours_t color);

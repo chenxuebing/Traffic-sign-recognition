@@ -4,67 +4,89 @@
 #include "database.hpp"
 #include "neuralNet.hpp"
 
-int main(int argc, char** argv)
+int main()
 {
-    std::vector<std::pair<int, cv::Mat>> images = get_images();
+	std::vector<std::pair<int, cv::Mat>> images;
 
-    std::size_t count_images = images.size();
+	images = get_images(red_c);
 
-    Neural_net nn(NUM_IN, NUM_HID, NUM_OUT);
+	std::cout << images.size() << std::endl;
 
-    float **input = new float *[count_images];
-    int *output = new int[count_images];
+	return 0;
 
-    for(std::size_t i = 0; i < count_images; i++)
-    {
-        input[i] = image_to_array(images[i].second);
-        output[i] = images[i].first;
-    }
-    
-    nn.trainBatch(input,output, count_images, MAX_EPOCHS);
+	neuralNet nn(400,30,10);
 
-    nn.saveWeights("weights.dat");
+	// Test data
+	double **input; 
+	input = new double *[5000];
+	for(int i = 0; i < 5000; i++)
+		input[i] = new double[400];
+	int *output;
+	output = new int[5000];
 
-    int correct = 0;
-    int incorrect = 0;
+	// Load test data
+	std::fstream inputs, outputs;
+	inputs.open("input.txt", std::ios::in);
+	outputs.open("output.txt", std::ios::in);
 
-    for(std::size_t i = 0; i < count_images; i++)
-    {
-        // std::cout << output[i] << " - " << nn.classify(input[i]).second << std::endl;
-        if (output[i] == nn.classify(input[i]).second)
-            correct++;
-         if (nn.classify(input[i]).first < 0.5)
-            incorrect++;
-    }
+	for (int i = 0; i < 5000; i++)
+	{
+		for (int j = 0; j < 400; j++)
+			inputs >> input[i][j];
+		outputs >> output[i];
+	}
 
-    std::cout << "correct: " << correct << " / " << count_images << " (id != res)" << std::endl;
-    std::cout << "incorrect: " << incorrect << " / " << count_images << " (percent < 50%)" << std::endl;
+	inputs.close();
+	outputs.close();
 
-    for(int i = 0; i < count_images; i++)
-        delete[] input[i];
-    delete[] input;
-    delete[] output;
+	// Training
+	// ---
 
-    return 0;
-}
+	// Batch training
+	nn.trainBatch(input,output,5000,20);
 
-int test_main(int argc, char** argv)
-{
-    Neural_net nn(NUM_IN, NUM_HID, NUM_OUT);
+	// Live training
+	/*
+	double* results = new double[10];
+	double max = -1;
+	int ans = 0;
+	double acc = 0;
+	for (int i = 0; i < 5000; i++)
+	{
+		results = nn.trainLive(input[i],output[i]);
+		for (int j = 0; j < 10; j++)
+		{
+			if (results[j] > max)
+			{
+				max = results[j];
+				ans = j;
+			}
+		}
+		if (ans == output[i])
+			acc += 1.0;
+	}
+	acc = acc / 5000.0 * 100.0;
+	cout << "Live training accuracy: " << acc << endl;
+	*/
 
-    nn.loadWeights("weights.dat");
+	// Save/Load
+	// ---
 
+	// Saving weights
+	nn.saveWeights("weights.dat");
 
-    std::cout << "Test recognition" << std::endl;
+	// Loading weights
+	nn.loadWeights("weights.dat");
 
-    cv::Mat cv_image = cv::imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
-    cv::Mat cv_resize_image;
+	// Testing some outputs
+	std::cout << "Value: " << output[20] << ", Result: " << nn.classify(input[20]) << std::endl;
+	std::cout << "Value: " << output[300] << ", Result: " << nn.classify(input[300]) << std::endl;
+	std::cout << "Value: " << output[2500] << ", Result: " << nn.classify(input[2500]) << std::endl;
+	std::cout << "Value: " << output[4800] << ", Result: " << nn.classify(input[4800]) << std::endl;
 
-    cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
-    
-    float *array = image_to_array(cv_resize_image);
-
-    std::cout << "percent: " << nn.classify(array).first << " id: " << nn.classify(array).second << std::endl;
-
-    return 0;
+	for(int i = 0; i < 5000; i++)
+		delete[] input[i];
+	delete[] input;
+	delete[] output;
+	return 0;
 }
