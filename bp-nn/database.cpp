@@ -57,26 +57,13 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
     {
         if (i->contour == color)
         {
-            for (int n = 0; n < 10; n ++)
-            {
-                std::string part_name = std::to_string(i->id) + "_0" + std::to_string(n);
+            std::string name = std::to_string(i->id) + "_icon.gif";
 
-                auto it = std::find_if(image_names.begin(), image_names.end(), 
-                    [&part_name](std::string const& image_name)
-                    { 
-                        return image_name.find(part_name) != std::string::npos;
-                    }
-                );
+            cv::Mat cv_image = cv::imread(name, CV_LOAD_IMAGE_GRAYSCALE);
+            cv::Mat cv_resize_image;
 
-                if (it != image_names.end())
-                {
-                    cv::Mat cv_image = cv::imread("./db/" + *it, CV_LOAD_IMAGE_GRAYSCALE);
-                    cv::Mat cv_resize_image;
-
-                    cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
-                    images.push_back(std::pair<int, cv::Mat>(i->id, cv_resize_image));
-                }
-            }
+            cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
+            images.push_back(std::pair<int, cv::Mat>(i->id, cv_resize_image));
         }
     }
 
