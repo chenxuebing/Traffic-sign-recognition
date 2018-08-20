@@ -69,3 +69,20 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
 
     return images;  
 }
+
+float* image_to_array(cv::Mat image)
+{
+    float *output = new float[image.rows * image.cols];
+    std::size_t n = 0;
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            output[n] = 127.0 / static_cast<int>(image.at<uchar>(j,i));
+            n++;
+        }
+    }
+
+    return output;
+}
