@@ -4,6 +4,8 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
+#define IMG_SIZE 50
+
 typedef enum contours_t
 {
     red_c = 101,
@@ -24,6 +26,13 @@ typedef std::vector<Sign_params_t> sign_array_t;
 
 const sign_array_t sign_array = {
     {
+        0,
+        red_c,
+        "Give priority to vehicles from opposite direction ",
+        "Преимущество встречного движения",
+        "Перевага зустрічного руху"
+    },
+    {
         1,
         red_c,
         "No stopping",
@@ -43,7 +52,35 @@ const sign_array_t sign_array = {
         "No left turn",
         "Поворот в левую сторону запрещен",
         "Поворот ліворуч заборонено"
-    }
+    },
+    {
+        4,
+        red_c,
+        "Stop and give way ",
+        "Проезд без остановки запрещен",
+        "Проїзд без зупинки заборонено"
+    },
+    {
+        5,
+        red_c,
+        "Give way",
+        "Опасный поворот направо",
+        "Bend to right"
+    },
+    {
+        6,
+        red_c,
+        "Level crossing without barrier",
+        "Железнодорожный переезд без шлагбаума",
+        "Залізничний переїзд без шлагбаума"
+    },
+    {
+        7,
+        red_c,
+        "No entry",
+        "Въезд запрещен",
+        "В'їзд заборонено"
+    },
 };
 
 std::vector<std::pair<int, cv::Mat>> get_images(contours_t color);
