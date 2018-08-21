@@ -15,30 +15,30 @@ neuralNet::neuralNet(int numIn, int numHid, int numOut) : sizeInput(numIn), size
 	momentum = 0.8;
 
 	// Allocate neurons
-	neuronsInput = new double[sizeInput + 1];
-	neuronsHidden = new double[sizeHidden + 1];
-	neuronsOutput = new double[sizeOutput];
+	neuronsInput = new float[sizeInput + 1];
+	neuronsHidden = new float[sizeHidden + 1];
+	neuronsOutput = new float[sizeOutput];
 
 	// Allocate weights
-	weightsInputToHidden = new double*[sizeInput + 1];
-	weightsHiddenToOutput = new double*[sizeHidden + 1];
+	weightsInputToHidden = new float*[sizeInput + 1];
+	weightsHiddenToOutput = new float*[sizeHidden + 1];
 
 	// Allocate training data
-	errorHidden = new double[sizeHidden + 1];
-	errorOutput = new double[sizeOutput];
-	idealOutput = new double[sizeOutput];
-	oldDeltaWeightInputToHidden = new double*[sizeInput + 1];
-	oldDeltaWeightHiddenToOutput = new double*[sizeHidden + 1];
-	newDeltaWeightInputToHidden = new double*[sizeInput + 1];
-	newDeltaWeightHiddenToOutput = new double*[sizeHidden + 1];
+	errorHidden = new float[sizeHidden + 1];
+	errorOutput = new float[sizeOutput];
+	idealOutput = new float[sizeOutput];
+	oldDeltaWeightInputToHidden = new float*[sizeInput + 1];
+	oldDeltaWeightHiddenToOutput = new float*[sizeHidden + 1];
+	newDeltaWeightInputToHidden = new float*[sizeInput + 1];
+	newDeltaWeightHiddenToOutput = new float*[sizeHidden + 1];
 
 	// Initialize layers
 	for (int i = 0; i <= sizeInput; i++)
 	{
 		neuronsInput[i] = 0;
-		weightsInputToHidden[i] = new double[sizeHidden];
-		oldDeltaWeightInputToHidden[i] = new double[sizeHidden];
-		newDeltaWeightInputToHidden[i] = new double[sizeHidden];
+		weightsInputToHidden[i] = new float[sizeHidden];
+		oldDeltaWeightInputToHidden[i] = new float[sizeHidden];
+		newDeltaWeightInputToHidden[i] = new float[sizeHidden];
 		for (int j = 0; j < sizeHidden; j++)
 		{
 			weightsInputToHidden[i][j] = 0;
@@ -51,9 +51,9 @@ neuralNet::neuralNet(int numIn, int numHid, int numOut) : sizeInput(numIn), size
 	{
 		neuronsHidden[j] = 0;
 		errorHidden[j] = 0;
-		weightsHiddenToOutput[j] = new double[sizeOutput];
-		oldDeltaWeightHiddenToOutput[j] = new double[sizeOutput];
-		newDeltaWeightHiddenToOutput[j] = new double[sizeOutput];
+		weightsHiddenToOutput[j] = new float[sizeOutput];
+		oldDeltaWeightHiddenToOutput[j] = new float[sizeOutput];
+		newDeltaWeightHiddenToOutput[j] = new float[sizeOutput];
 		for (int k = 0; k < sizeOutput; k++)
 		{
 			weightsHiddenToOutput[j][k] = 0;
@@ -106,30 +106,30 @@ neuralNet::~neuralNet()
 void neuralNet::initializeWeights()
 {
 	// Range of weights
-	double rangeHidden = 1/sqrt((double)sizeInput);
-	double rangeOutput = 1/sqrt((double)sizeHidden);
+	float rangeHidden = 1/sqrt((float)sizeInput);
+	float rangeOutput = 1/sqrt((float)sizeHidden);
 
 	// Randomly set weights
 	for (int i = 0; i <= sizeInput; i++)
 	{
 		for (int j = 0; j < sizeHidden; j++)
-			weightsInputToHidden[i][j] = (((double)(rand() % 100 + 1))/100.0) * 2.0 * rangeHidden - rangeHidden;
+			weightsInputToHidden[i][j] = (((float)(rand() % 100 + 1))/100.0) * 2.0 * rangeHidden - rangeHidden;
 	}
 	for (int j = 0; j <= sizeHidden; j++)
 	{
 		for (int k = 0; k < sizeOutput; k++)
-			weightsHiddenToOutput[j][k] = (((double)(rand() % 100 + 1))/100.0) * 2.0 * rangeOutput - rangeOutput;
+			weightsHiddenToOutput[j][k] = (((float)(rand() % 100 + 1))/100.0) * 2.0 * rangeOutput - rangeOutput;
 	}
 }
 
-double neuralNet::activationFunction(double in)
+float neuralNet::activationFunction(float in)
 {
 	// Many functions may be used for activation
 	// Sigmoid used by default
 	return 1.0 / (1.0 + exp(-in));
 }
 
-void neuralNet::feedForward(double* in)
+void neuralNet::feedForward(float* in)
 {
 	for (int i = 0; i < sizeInput; i++)
 		neuronsInput[i] = in[i];
@@ -149,22 +149,22 @@ void neuralNet::feedForward(double* in)
 	}
 }
 
-void neuralNet::setLearningRate(double lr)
+void neuralNet::setLearningRate(float lr)
 {
 	learningRate = lr;
 }
 
-void neuralNet::setMomentum(double m)
+void neuralNet::setMomentum(float m)
 {
 	momentum = m;
 }
 
-double neuralNet::getLearningRate()
+float neuralNet::getLearningRate()
 {
 	return learningRate;
 }
 
-double neuralNet::getMomentum()
+float neuralNet::getMomentum()
 {
 	return momentum;
 }
@@ -251,13 +251,13 @@ bool neuralNet::loadWeights(char* inFile)
 	}
 }
 
-void neuralNet::trainBatch(double** inputs, int* outputs, int numTests, int maxEpochs)
+void neuralNet::trainBatch(float** inputs, int* outputs, int numTests, int maxEpochs)
 {
 	int training = 0.6 * numTests;
 	int generalizing = 0.8 * numTests;
 
-	double TMSE, Tacc, GMSE, Gacc, VMSE, Vacc;
-	double max, sum;
+	float TMSE, Tacc, GMSE, Gacc, VMSE, Vacc;
+	float max, sum;
 	int result, count;
 
 	for (int epoch = 1; epoch <= maxEpochs; epoch++)
@@ -318,8 +318,8 @@ void neuralNet::trainBatch(double** inputs, int* outputs, int numTests, int maxE
 			}
 			count++;
 		}
-		TMSE = TMSE / (double)count;
-		Tacc = Tacc / (double)count * 100.0;
+		TMSE = TMSE / (float)count;
+		Tacc = Tacc / (float)count * 100.0;
 
 		// Generalization testing on 20% of the data
 		count = 0;
@@ -343,8 +343,8 @@ void neuralNet::trainBatch(double** inputs, int* outputs, int numTests, int maxE
 				Gacc += 1.0;
 			count++;
 		}
-		GMSE = GMSE / (double)count;
-		Gacc = Gacc / (double)count * 100.0;
+		GMSE = GMSE / (float)count;
+		Gacc = Gacc / (float)count * 100.0;
 
 		cout<<"Epoch: "<<epoch<<", TMSE: "<<TMSE<<", Tacc: "<<Tacc<<", GMSE: "<<GMSE<<", Gacc: "<<Gacc<<endl;
 		if (((TMSE < 0.05)&&(GMSE < 0.05)) || ((Tacc > 95)&&(Gacc > 95)))
@@ -373,16 +373,16 @@ void neuralNet::trainBatch(double** inputs, int* outputs, int numTests, int maxE
 			Vacc += 1.0;
 		count++;
 	}
-	VMSE = VMSE / (double)count;
-	Vacc = Vacc / (double)count * 100.0;
+	VMSE = VMSE / (float)count;
+	Vacc = Vacc / (float)count * 100.0;
 
 	cout << "VMSE: " << VMSE << ", Vacc: " << Vacc << endl;
 	return;
 }
 
-double* neuralNet::trainLive(double* in, int out)
+float* neuralNet::trainLive(float* in, int out)
 {
-	double sum;
+	float sum;
 
 	// Feed forward
 	feedForward(in);
@@ -420,10 +420,10 @@ double* neuralNet::trainLive(double* in, int out)
 	return neuronsOutput;
 }
 
-int neuralNet::classify(double* in)
+std::pair<float, int> neuralNet::classify(float* in)
 {
-	double max = -1.0;
-	int result = 0;
+	float max = -1.0;
+	std::pair<float, int> result;
 
 	feedForward(in);
 
@@ -432,7 +432,9 @@ int neuralNet::classify(double* in)
 		if (neuronsOutput[k] > max)
 		{
 			max = neuronsOutput[k];
-			result = k;
+			
+			result.first = max;
+			result.second = k;
 		}
 	}
 

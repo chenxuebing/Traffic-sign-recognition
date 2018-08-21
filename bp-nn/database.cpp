@@ -1,5 +1,7 @@
 // #include <dirent.h>
 #include <algorithm>
+#include <time.h>
+#include <stdlib.h>
 #include "database.hpp"
 
 // std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
@@ -39,7 +41,7 @@
 //                     cv::Mat cv_image = cv::imread("./db/" + *it, CV_LOAD_IMAGE_GRAYSCALE);
 //                     cv::Mat cv_resize_image;
 
-//                     cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
+//                     cv::resize(cv_image, cv_resize_image, cv::Size(IMG_SIZE, IMG_SIZE));
 //                     images.push_back(std::pair<int, cv::Mat>(i->id, cv_resize_image));
 //                 }
 //             }
@@ -49,7 +51,7 @@
 //     return images;  
 // }
 
-std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
+std::vector<std::pair<int, cv::Mat>> get_images(contours_t color, std::string path)
 {
     std::vector<std::pair<int, cv::Mat>> images;
 
@@ -57,12 +59,13 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
     {
         if (i->contour == color)
         {
-            std::string name = std::to_string(i->id) + "_icon.gif";
+            std::string name = path + std::to_string(i->id) + "_icon.png";
 
             cv::Mat cv_image = cv::imread(name, CV_LOAD_IMAGE_GRAYSCALE);
             cv::Mat cv_resize_image;
 
-            cv::resize(cv_image, cv_resize_image, cv::Size(50, 50));
+            cv::resize(cv_image, cv_resize_image, cv::Size(IMG_SIZE, IMG_SIZE));
+            normalize_image(cv_resize_image);
             images.push_back(std::pair<int, cv::Mat>(i->id, cv_resize_image));
         }
     }
@@ -70,16 +73,47 @@ std::vector<std::pair<int, cv::Mat>> get_images(contours_t color)
     return images;  
 }
 
-float* image_to_array(cv::Mat image)
+void normalize_image(cv::Mat& image)
 {
-    float *output = new float[image.rows * image.cols];
-    std::size_t n = 0;
+    int max = 0;
+    int min = 255;
 
     for (int i = 0; i < image.rows; i++)
     {
         for (int j = 0; j < image.cols; j++)
         {
-            output[n] = 127.0 / static_cast<int>(image.at<uchar>(j,i));
+            if (max < static_cast<int>(image.at<uchar>(j,i)))
+            {
+                max = static_cast<int>(image.at<uchar>(j,i));
+            }
+            if (min > static_cast<int>(image.at<uchar>(j,i)))
+            {
+                min = static_cast<int>(image.at<uchar>(j,i));
+            }
+        }
+    }
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            image.at<uchar>(j,i) = 255 * (static_cast<int>(image.at<uchar>(j,i)) - min) / (max - min);
+        }
+    }
+}
+
+float* image_to_array(cv::Mat image)
+{
+    float *output = new float[image.rows * image.cols];
+    std::size_t n = 0;
+
+    normalize_image(image);
+
+    for (int i = 0; i < image.rows; i++)
+    {
+        for (int j = 0; j < image.cols; j++)
+        {
+            output[n] = 127.0 / (static_cast<int>(image.at<uchar>(j,i)));
             n++;
         }
     }

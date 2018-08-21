@@ -83,5 +83,6 @@ const sign_array_t sign_array = {
     },
 };
 
-std::vector<std::pair<int, cv::Mat>> get_images(contours_t color);
+std::vector<std::pair<int, cv::Mat>> get_images(contours_t color, std::string path);
+void normalize_image(cv::Mat& image);
 float* image_to_array(cv::Mat image);

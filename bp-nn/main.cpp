@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 
 #include "database.hpp"
 #include "neuralNet.hpp"
@@ -8,23 +9,29 @@ int main(int argc, char** argv)
 {
     std::vector<std::pair<int, cv::Mat>> images = get_images(red_c);
 
-    std::size_t count_images = images.size();
-
-    int numIn = 50 * 50;
+    int numIn = IMG_SIZE * IMG_SIZE;
     int numHid = 30;
-    int numOut = 4;
+    int numOut = images.size();
     int maxEpochs = 200;
 
+    std::cout << numOut << std::endl;
 
-images.insert( images.end(), images.begin(), images.end() );
+	images.insert(images.end(), images.begin(), images.end());
+	images.insert(images.end(), images.begin(), images.end());
+	images.insert(images.end(), images.begin(), images.end());
+	images.insert(images.end(), images.begin(), images.end());
+	images.insert(images.end(), images.begin(), images.end());
 
+    std::size_t count_images = images.size();
 
     neuralNet nn(numIn, numHid, numOut);
 
     float **input = new float *[count_images];
     int *output = new int[count_images];
 
-    for(std::size_t i = 0; i < count_images; i++)
+	srand(time(NULL));
+
+    for (std::size_t i = 0; i < count_images; i++)
     {
         input[i] = image_to_array(images[i].second);
         output[i] = images[i].first;
@@ -32,12 +39,12 @@ images.insert( images.end(), images.begin(), images.end() );
     
     nn.trainBatch(input,output, count_images, maxEpochs);
 
-    nn.saveWeights("weights.dat");
+    nn.saveWeights("weights_red.dat");
 
     int correct = 0;
     int incorrect = 0;
 
-    for(std::size_t i = 0; i < count_images; i++)
+    for (std::size_t i = 0; i < count_images; i++)
     {
         // std::cout << output[i] << " - " << nn.classify(input[i]).second << std::endl;
         if (output[i] == nn.classify(input[i]).second)
@@ -65,7 +72,7 @@ int test_main(int argc, char** argv)
 
     neuralNet nn(numIn, numHid, numOut);
 
-    nn.loadWeights("weights.dat");
+    nn.loadWeights("weights_red.dat");
 
 
     std::cout << "Test recognition" << std::endl;
