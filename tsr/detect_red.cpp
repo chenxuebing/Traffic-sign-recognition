@@ -15,7 +15,7 @@
 
 namespace {
 
-float compare_images(cv::Mat img_in, std::vector<std::pair<int, cv::Mat>> img_v)
+int compare_images(cv::Mat img_in, std::vector<std::pair<int, cv::Mat>> img_v)
 {
     cv::Mat resize_image;
     cv::resize(img_in, resize_image, cv::Size(IMG_SIZE, IMG_SIZE));
@@ -23,6 +23,7 @@ float compare_images(cv::Mat img_in, std::vector<std::pair<int, cv::Mat>> img_v)
     cv::Mat img_1;
     cv::cvtColor(resize_image, img_1, CV_BGR2GRAY);
     normalize_image(img_1);
+
 
     for (auto i = img_v.begin(); i != img_v.end(); i++)
     {
@@ -48,7 +49,12 @@ float compare_images(cv::Mat img_in, std::vector<std::pair<int, cv::Mat>> img_v)
         // BFMatcher matcher;
 
         std::vector<cv::DMatch> matches;
+
+        if (descriptors_1.empty() || descriptors_2.empty())
+            continue;
+
         matcher.match(descriptors_1, descriptors_2, matches);
+
         double max_dist = 0; double min_dist = 100;
 
         //-- Quick calculation of max and min distances between keypoints
@@ -123,9 +129,11 @@ float compare_images(cv::Mat img_in, std::vector<std::pair<int, cv::Mat>> img_v)
 
         // //-- Show detected matches
 
-        cv::imshow( "Good Matches", img_matches );
+        cv::imshow("Good Matches", img_matches);
 
         cv::waitKey(0);
+
+        std::cout << "end loop" << std::endl;    
     }
 
     return 0;
@@ -172,6 +180,7 @@ void red_contours(cv::Mat bgr_image)
         bgr_image.copyTo(crop, mask);
 
         compare_images(crop(cv::boundingRect(contours[x])), red_images);
+
         // cv::drawContours(bgr_image, contours, x, cv::Scalar(125, 255, 0), 2);
     }
 

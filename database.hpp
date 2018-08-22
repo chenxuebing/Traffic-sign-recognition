@@ -2,9 +2,6 @@
 
 #include <iostream>
 #include <vector>
-#include <opencv2/opencv.hpp>
-
-#define IMG_SIZE 50
 
 typedef enum contours_t
 {
@@ -82,7 +79,3 @@ const sign_array_t sign_array = {
         "В'їзд заборонено"
     },
 };
-
-std::vector<std::pair<int, cv::Mat>> get_images(contours_t color, std::string path);
-void normalize_image(cv::Mat& image);
-float* image_to_array(cv::Mat image);

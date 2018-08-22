@@ -49,26 +49,4 @@ ApplicationWindow {
                 header.header_name = "Swipe page name"
         }
     }
-
-    SettingsPage {
-        id: settings_page
-        visible: false
-
-        onVisibleChanged: {
-            if (visible == true)
-                header.header_name = "Settings"
-        }
-    }
-
-//    footer: TabBar {
-//        id: tabBar
-//        currentIndex: swipeView.currentIndex
-
-//        TabButton {
-//            text: qsTr("Page 1")
-//        }
-//        TabButton {
-//            text: qsTr("Page 2")
-//        }
-//    }
 }

@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='test/img_16.jpg'>
+    <box top='279' left='267' width='390' height='350'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_17.jpg'>
+    <box top='97' left='154' width='200' height='179'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_19.jpg'>
+    <box top='71' left='123' width='96' height='87'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_26.jpg'>
+    <box top='100' left='288' width='180' height='158'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_3.jpg'>
+    <box top='75' left='42' width='1186' height='1003'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_47.jpg'>
+    <box top='96' left='282' width='193' height='154'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_4.jpg'>
+    <box top='51' left='225' width='385' height='370'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_5.jpg'>
+    <box top='12' left='99' width='265' height='220'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_61.jpg'>
+    <box top='135' left='24' width='301' height='241'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_7.jpg'>
+    <box top='159' left='147' width='184' height='181'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_80.jpg'>
+    <box top='48' left='408' width='112' height='100'>
+      <label>2</label>
+    </box>
+    <box top='246' left='268' width='116' height='108'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/img_91.jpg'>
+    <box top='165' left='218' width='94' height='79'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-01-58.png'>
+    <box top='235' left='37' width='65' height='52'>
+      <label>2</label>
+    </box>
+    <box top='250' left='1061' width='58' height='48'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-02-53.png'>
+    <box top='118' left='36' width='56' height='45'>
+      <label>2</label>
+    </box>
+    <box top='132' left='1198' width='64' height='49'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-03-27.png'>
+    <box top='97' left='256' width='82' height='67'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-03-51.png'>
+    <box top='40' left='181' width='88' height='83'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-04-26.png'>
+    <box top='41' left='46' width='81' height='77'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-04-50.png'>
+    <box top='63' left='34' width='74' height='69'>
+      <label>2</label>
+    </box>
+    <box top='87' left='954' width='69' height='60'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-05-14.png'>
+    <box top='41' left='32' width='65' height='51'>
+      <label>2</label>
+    </box>
+    <box top='67' left='1315' width='72' height='58'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-05-29.png'>
+    <box top='15' left='31' width='62' height='54'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-05-43.png'>
+    <box top='24' left='70' width='64' height='56'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-05-59.png'>
+    <box top='20' left='62' width='135' height='121'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-06-15.png'>
+    <box top='50' left='63' width='68' height='61'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-06-40.png'>
+    <box top='30' left='68' width='64' height='61'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-06-53.png'>
+    <box top='17' left='29' width='87' height='73'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-07-09.png'>
+    <box top='16' left='58' width='106' height='102'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-07-21.png'>
+    <box top='20' left='61' width='104' height='105'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-07-58.png'>
+    <box top='8' left='84' width='127' height='121'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-08-14.png'>
+    <box top='24' left='17' width='67' height='55'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-08-39.png'>
+    <box top='56' left='253' width='130' height='109'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-09-01.png'>
+    <box top='83' left='22' width='111' height='109'>
+      <label>2</label>
+    </box>
+  </image>
+  <image file='test/Screenshot from 2018-08-22 15-09-23.png'>
+    <box top='37' left='71' width='66' height='53'>
+      <label>2</label>
+    </box>
+  </image>
+</images>
+</dataset>

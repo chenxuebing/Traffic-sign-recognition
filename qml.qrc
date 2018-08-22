@@ -6,6 +6,5 @@
         <file>Header.qml</file>
         <file>NavigationDrawer.qml</file>
         <file>Swipe.qml</file>
-        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>
