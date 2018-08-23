@@ -4,7 +4,7 @@
 #include "traffic_sign_recognition.h"
 #include "database.hpp"
 
-void tsr(dlib::array2d<unsigned char> &image, int upsample_amount = 0)
+void tsr(dlib::array2d<unsigned char> &image, int upsample_amount)
 {
     try
     {
@@ -33,31 +33,9 @@ void tsr(dlib::array2d<unsigned char> &image, int upsample_amount = 0)
 //            win.add_overlay(rects[j].rect, dlib::rgb_pixel(255,0,0), signs[rects[j].weight_index].en_name);
         }
     }
-    catch (std::exception& e) {
-         qDebug() << "tsr: " << e.what();
-    }
-}
-
-void test()
-{
-    try
-    {
-        dlib::array2d<unsigned char> image;
-
-        load_image(image, "/home/amyrhorod/Downloads/Screen.png");
-
-//        tsr(image, 1);
-
-        dlib::image_window win;
-
-        win.clear_overlay();
-        win.set_image(image);
-
-        while(true);
-    }
-
     catch (std::exception& e)
     {
-        qDebug() << "tsr: " << e.what();
+         qDebug() << "tsr: " << e.what();
+         throw ;
     }
 }

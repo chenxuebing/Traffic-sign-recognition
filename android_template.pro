@@ -1,5 +1,7 @@
 QT += quick
 QT += core
+QT += multimedia
+QT += widgets
 
 CONFIG += c++11
 
@@ -16,7 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    traffic_sign_recognition.cpp
+    traffic_sign_recognition.cpp \
+    road_video_filter.cpp
 
 RESOURCES += qml.qrc
 
@@ -52,11 +55,13 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 HEADERS += \
     database.hpp \
-    traffic_sign_recognition.h
+    traffic_sign_recognition.h \
+    road_video_filter.h
 
 PKGCONFIG += link_pkgconfig
 PKGCONFIG += x11
 PKGCONFIG += dlib-1
+PKGCONFIG += opencv
 
 LIBS += -ldlib
 LIBS += -llapack
@@ -64,3 +69,8 @@ LIBS += -lcblas
 LIBS += -lpng
 LIBS += -ljpeg
 LIBS += -pthread
+LIBS += -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_cvv
+LIBS += -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_img_hash -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_core
+LIBS += -lopencv_rgbd -lopencv_saliency -lopencv_sfm -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_surface_matching -lopencv_tracking
+LIBS += -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc -lopencv_calib3d
+LIBS += -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect -lopencv_xphoto -lopencv_imgproc

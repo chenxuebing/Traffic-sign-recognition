@@ -10,7 +10,6 @@
 
 #include <iostream>
 
-void tsr(dlib::array2d<unsigned char> &image, int upsample_amount);
-void test();
+void tsr(dlib::array2d<unsigned char> &image, int upsample_amount = 0);
 
 #endif // TRAFFIC_SIGN_RECOGNITION_H
