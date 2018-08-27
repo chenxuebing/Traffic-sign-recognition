@@ -1,6 +1,3 @@
-#include <opencv2/core/core.hpp>
-#include <opencv2/opencv.hpp>
-#include <dlib/opencv.h>
 #include <QDebug>
 
 #include "road_video_filter.h"
@@ -20,13 +17,11 @@ QVideoFrame RoadVideoFilterRunnable::run(QVideoFrame* input, const QVideoSurface
         cv::Mat frameRGB;
         cv::Mat frameRGB_res(frameRGB);
         cv::Mat frameGray;
-        dlib::array2d<unsigned char> dlibImageGray;
 
         cv::cvtColor(frameYUV, frameRGB, CV_YUV2BGRA_I420);
         cv::cvtColor(frameRGB, frameGray, CV_BGR2GRAY);
-        dlib::assign_image(dlibImageGray, dlib::cv_image<unsigned char>(frameGray));
 
-//        tsr(dlibImageGray, frameRGB_res);
+//        tsr(frameGray, frameRGB_res);
 
         QImage q_image_frame = QImage(static_cast<uchar*>(frameRGB_res.data), frameRGB_res.cols, frameRGB_res.rows, QImage::Format_RGB32);
 
