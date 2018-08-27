@@ -1,5 +1,5 @@
 #include <exception>
-// #include <QDebug>
+ #include <QDebug>
 
 #include <dlib/svm_threaded.h>
 #include <dlib/gui_widgets.h>
@@ -53,7 +53,7 @@ cv::Mat tsr(cv::Mat frameGray, int upsample_amount)
     }
     catch (std::exception& e)
     {
-         // qDebug() << "tsr: " << e.what();
+          qDebug() << "tsr: " << e.what();
          throw ;
     }
 }
