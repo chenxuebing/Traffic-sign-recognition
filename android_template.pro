@@ -49,7 +49,8 @@ DISTFILES += \
     database/4_icon.png \
     database/5_icon.png \
     database/6_icon.png \
-    database/7_icon.png
+    database/7_icon.png \
+    transito-cv/svm_detectors/0.svm
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

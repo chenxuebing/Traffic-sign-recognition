@@ -69,6 +69,8 @@ void RoadVideoFilterRunnable::_detect()
         {
             while (true)
             {
+                qDebug() << "start";
+
                 cv::Mat frameGray;
 
                 {
@@ -83,6 +85,8 @@ void RoadVideoFilterRunnable::_detect()
                     std::unique_lock<std::mutex> lock(_filterMutex);
                     _filter = newFilter;
                 }
+
+                qDebug() << "end";
             }
         }
         catch (std::exception& e)
