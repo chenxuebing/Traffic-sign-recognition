@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     width: parent.width
-    height: dp(50)
+    height: dp(45)
     color: header_color
 
     property string header_name

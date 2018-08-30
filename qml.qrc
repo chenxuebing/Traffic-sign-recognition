@@ -5,5 +5,13 @@
         <file>Header.qml</file>
         <file>NavigationDrawer.qml</file>
         <file>Swipe.qml</file>
+        <file>database/0_icon.png</file>
+        <file>database/1_icon.png</file>
+        <file>database/2_icon.png</file>
+        <file>database/3_icon.png</file>
+        <file>database/4_icon.png</file>
+        <file>database/5_icon.png</file>
+        <file>database/6_icon.png</file>
+        <file>database/7_icon.png</file>
     </qresource>
 </RCC>

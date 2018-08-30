@@ -43,7 +43,16 @@ SwipeView {
             id: videoFilter
 
             onNewSign: {
-                console.log(id, name);
+                console.log(id, name)
+
+                header.header_name = name
+
+                if (fpListModel.count == 6)
+                {
+                    fpListModel.remove(5)
+                }
+
+                fpListModel.append({id : id})
             }
 
             onRoadStatus: {
@@ -55,6 +64,42 @@ SwipeView {
             id: photoPreview
         }
 
+        Rectangle {
+            id: fpListBackground
+
+            height: parent.height
+            width: parent.height / 6
+            color: header_color
+            opacity: 0.5
+            anchors.right: parent.right
+        }
+
+        ListModel {
+            id: fpListModel
+        }
+
+        Component {
+            id: fpListDelegate
+
+            Item {
+                width: fpListBackground.width
+                height: fpListBackground.width
+
+                Image {
+                    anchors.centerIn: parent
+                    source: "database/" + id + "_icon.png"
+                    width: parent.width - dp(2)
+                    height: parent.height - dp(2)
+                }
+            }
+        }
+
+        ListView {
+            anchors.fill: fpListBackground
+            model: fpListModel
+            delegate: fpListDelegate
+            interactive: false
+        }
     }
 
 

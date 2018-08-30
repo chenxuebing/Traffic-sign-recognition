@@ -106,7 +106,7 @@ void RoadVideoFilterRunnable::_detect()
                         {
                             std::chrono::duration<double> diff = std::chrono::system_clock::now() - _detectedSigns[i];
 
-                            if (diff.count() > 5)
+                            if (diff.count() > 10)
                             {
                                 _detectedSigns[i] = std::chrono::system_clock::now();
                                 emit static_cast<RoadVideoFilter*>(_rvf)->newSign(i, signs[static_cast<std::size_t>(i)].name[static_cast<RoadVideoFilter*>(_rvf)->lenguageID]);

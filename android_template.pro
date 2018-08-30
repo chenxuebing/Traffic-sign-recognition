@@ -42,14 +42,6 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    database/0_icon.png \
-    database/1_icon.png \
-    database/2_icon.png \
-    database/3_icon.png \
-    database/4_icon.png \
-    database/5_icon.png \
-    database/6_icon.png \
-    database/7_icon.png \
     transito-cv/svm_detectors/0.svm
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

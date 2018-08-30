@@ -34,7 +34,7 @@ ApplicationWindow {
 
     header: Header {
         id: header
-        header_name: "Program name"
+        header_name: ""
     }
 
     NavigationDrawer {
