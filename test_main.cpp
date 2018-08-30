@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 
 	cv::cvtColor(img_rgb, img_gray, CV_BGR2GRAY);
 
-	cv::Mat filter(img_gray.rows, img_gray.cols, CV_8UC3, cv::Scalar(0, 0, 0));// = tsr(img_gray);
+	cv::Mat filter(img_gray.rows, img_gray.cols, CV_8UC3, cv::Scalar(0, 0, 0));
 
 	tld(img_gray, filter);
 

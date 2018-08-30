@@ -81,6 +81,8 @@ void RoadVideoFilterRunnable::_detect()
 
                 cv::Mat newFilter = tsr(frameGray, _detectors);
 
+                tld(frameGray, newFilter);
+
                 {
                     std::unique_lock<std::mutex> lock(_filterMutex);
                     _filter = newFilter;

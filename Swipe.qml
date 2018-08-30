@@ -16,7 +16,7 @@ SwipeView {
 
             imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
 
-            imageCapture.resolution: "640x480"
+            imageCapture.resolution: "1280x720"
 
             exposure {
                 exposureCompensation: -1.0

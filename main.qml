@@ -4,8 +4,8 @@ import QtQuick.Window 2.1
 
 ApplicationWindow {
     visible: true
-    width: 480
-    height: 640
+    width: 640
+    height: 480
     title: qsTr("Tabs")
 
     property color header_color: "#303030"
