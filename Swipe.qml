@@ -41,6 +41,14 @@ SwipeView {
 
         RoadVideoFilter {
             id: videoFilter
+
+            onNewSign: {
+                console.log(id, name);
+            }
+
+            onRoadStatus: {
+                console.log(status)
+            }
         }
 
         Image {

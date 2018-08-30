@@ -17,7 +17,7 @@
 
 typedef dlib::scan_fhog_pyramid<dlib::pyramid_down<6>> image_scanner_type;
 
-cv::Mat tsr(cv::Mat frameGray, std::vector<dlib::object_detector<image_scanner_type>> detectors);
-void tld(cv::Mat frameGray, cv::Mat& filter);
+cv::Mat tsr(cv::Mat frameGray, std::vector<dlib::object_detector<image_scanner_type>> detectors, std::vector<int>& signsID);
+roadDirections_t tld(cv::Mat frameGray, cv::Mat& filter);
 
 #endif // TRAFFIC_SIGN_RECOGNITION_H

@@ -2,34 +2,40 @@
 
 #include <iostream>
 #include <vector>
+#include <QObject>
 
-typedef enum contours_t
+typedef enum roadDirections_t
 {
-    red_c = 101,
-    blue_c = 102,
-    yellow_c = 103
-} contours_t;
+    straight_road = 0,
+    left_road = 1,
+    right_road = 2,
+    road_not_found = 4,
+} roadDirections_t;
 
 typedef struct Sign_params_t
 {
-    int                         id;
-    contours_t                  contour;
-    std::string                 detector;
-    std::string                 en_name;
-    std::string                 ru_name;
-    std::string                 ua_name;
+    int                     id;
+    std::string             detector;
+    std::vector<QString>    name;
 } Sign_params_t;
 
-typedef std::vector<Sign_params_t> sign_array_t;
+//typedef std::vector<Sign_params_t> sign_array_t;
 
-const sign_array_t signs = {
+const std::vector<std::vector<QString>> roadDirections = {
+    {"STRAIGHT", "ПРЯМО", "ПРЯМО"},
+    {"LEFT", "ЛЕВЕЕ", "ЛІВІШЕ"},
+    {"RIGHT", "ПРАВЕЕ", "ПРАВІШЕ"}
+};
+
+const std::vector<Sign_params_t> signs = {
     {
         0,
-        red_c,
         "/home/amyrhorod/android_template/transito-cv/svm_detectors/0.svm",
-        "Give way",
-        "Уступить дорогу",
-        "Дати дорогу"
+        {
+            "Give way",
+            "Уступить дорогу",
+            "Дати дорогу"
+        }
     }//,
 //    {
 //        1,

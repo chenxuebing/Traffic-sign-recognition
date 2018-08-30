@@ -15,7 +15,7 @@ int WbyNormVec(float h, float x, float y, float v0, float v1)
 
 } // namespace
 
-cv::Mat tsr(cv::Mat frameGray, std::vector<dlib::object_detector<image_scanner_type>> detectors)
+cv::Mat tsr(cv::Mat frameGray, std::vector<dlib::object_detector<image_scanner_type>> detectors, std::vector<int>& signsID)
 {
     try
     {
@@ -33,26 +33,28 @@ cv::Mat tsr(cv::Mat frameGray, std::vector<dlib::object_detector<image_scanner_t
             cv::Rect rect = cv::Rect(cv::Point2i(static_cast<int>(i->rect.left()), static_cast<int>(i->rect.top())),
                                      cv::Point2i(static_cast<int>(i->rect.right()), static_cast<int>(i->rect.bottom())));
             rectangle(filterImage, rect,  cv::Scalar(0, 255, 0), 2);
-            cv::putText(filterImage, signs[i->weight_index].en_name,
+            cv::putText(filterImage, signs[i->weight_index].name[0].toStdString(),
                     cv::Point(static_cast<int>(i->rect.right()), (static_cast<int>(i->rect.bottom()) + static_cast<int>(i->rect.top())) / 2),
                     cv::FONT_HERSHEY_PLAIN, 1.5, cv::Scalar(0, 255, 0), 2);
 
-             qDebug() << signs[i->weight_index].en_name.c_str();
+            signsID.push_back(signs[i->weight_index].id);
         }
 
         return filterImage;
     }
     catch (std::exception& e)
     {
-          qDebug() << "tsr: " << e.what();
+         qDebug() << "tsr: " << e.what();
          throw ;
     }
 }
 
-void tld(cv::Mat frame_gray, cv::Mat& filter)
-{
+roadDirections_t tld(cv::Mat frame_gray, cv::Mat& filter)
+{    
     try
     {
+        roadDirections_t status = road_not_found;
+
         int h = frame_gray.rows;
         int w = frame_gray.cols;
 
@@ -131,15 +133,15 @@ void tld(cv::Mat frame_gray, cv::Mat& filter)
 
                     if (ar < al + d && ar > al - d)
                     {
-                        qDebug() << "STRAIGHT";
+                        status = straight_road;
                     }
                     else if (al < ar)
                     {
-                        qDebug() << "LEFT";
+                        status = left_road;
                     }
                     else
                     {
-                        qDebug() << "RIGHT";
+                        status = right_road;
                     }
 
                     std::vector<cv::Point> poly_points;
@@ -158,6 +160,8 @@ void tld(cv::Mat frame_gray, cv::Mat& filter)
                 }
             }
         }
+
+        return status;
     }
     catch (std::exception& e)
     {

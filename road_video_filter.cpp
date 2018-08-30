@@ -1,6 +1,6 @@
 #include "road_video_filter.h"
 
-RoadVideoFilterRunnable::RoadVideoFilterRunnable()
+RoadVideoFilterRunnable::RoadVideoFilterRunnable(void* rvf) : _rvf(rvf)
 {
     unsigned int nthreads = std::thread::hardware_concurrency();
     std::chrono::milliseconds wait(1000 / nthreads);
@@ -69,8 +69,6 @@ void RoadVideoFilterRunnable::_detect()
         {
             while (true)
             {
-                qDebug() << "start";
-
                 cv::Mat frameGray;
 
                 {
@@ -79,16 +77,48 @@ void RoadVideoFilterRunnable::_detect()
                     cv::cvtColor(_frameRGB, frameGray, CV_RGB2GRAY);
                 }
 
-                cv::Mat newFilter = tsr(frameGray, _detectors);
+                std::vector<int> signsID;
 
-                tld(frameGray, newFilter);
+                cv::Mat newFilter = tsr(frameGray, _detectors, signsID);
+
+                if (true)
+                {
+                    roadDirections_t roadStatus = tld(frameGray, newFilter);
+                    if (roadStatus != road_not_found)
+                    {
+                        emit static_cast<RoadVideoFilter*>(_rvf)->roadStatus(roadDirections[roadStatus][static_cast<RoadVideoFilter*>(_rvf)->lenguageID]);
+                    }
+                }
 
                 {
                     std::unique_lock<std::mutex> lock(_filterMutex);
                     _filter = newFilter;
                 }
 
-                qDebug() << "end";
+                {
+                    std::unique_lock<std::mutex> lock(_detectedSignsMutex);
+
+                    for (auto i : signsID)
+                    {
+                        auto f = _detectedSigns.find(i);
+
+                        if (f != _detectedSigns.end())
+                        {
+                            std::chrono::duration<double> diff = std::chrono::system_clock::now() - _detectedSigns[i];
+
+                            if (diff.count() > 5)
+                            {
+                                _detectedSigns[i] = std::chrono::system_clock::now();
+                                emit static_cast<RoadVideoFilter*>(_rvf)->newSign(i, signs[static_cast<std::size_t>(i)].name[static_cast<RoadVideoFilter*>(_rvf)->lenguageID]);
+                            }
+                        }
+                        else
+                        {
+                            _detectedSigns[i] = std::chrono::system_clock::now();
+                            emit static_cast<RoadVideoFilter*>(_rvf)->newSign(i, signs[static_cast<std::size_t>(i)].name[static_cast<RoadVideoFilter*>(_rvf)->lenguageID]);
+                        }
+                    }
+                }
             }
         }
         catch (std::exception& e)
