@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
     qmlRegisterType<RoadVideoFilter>("roadVideoFilter", 1, 0, "RoadVideoFilter");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

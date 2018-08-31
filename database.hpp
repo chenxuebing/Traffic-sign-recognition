@@ -15,11 +15,9 @@ typedef enum roadDirections_t
 typedef struct Sign_params_t
 {
     int                     id;
-    std::string             detector;
+    QString                 detector;
     std::vector<QString>    name;
 } Sign_params_t;
-
-//typedef std::vector<Sign_params_t> sign_array_t;
 
 const std::vector<std::vector<QString>> roadDirections = {
     {"STRAIGHT", "ПРЯМО", "ПРЯМО"},
@@ -30,7 +28,7 @@ const std::vector<std::vector<QString>> roadDirections = {
 const std::vector<Sign_params_t> signs = {
     {
         0,
-        "/home/amyrhorod/android_template/transito-cv/svm_detectors/0.svm",
+        ":transito-cv/svm_detectors/0.svm",
         {
             "Give way",
             "Уступить дорогу",

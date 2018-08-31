@@ -8,6 +8,9 @@
 #include <condition_variable>
 #include <chrono>
 #include <unordered_map>
+#include <QFile>
+#include <QDir>
+#include <QStandardPaths>
 
 #include "traffic_sign_recognition.h"
 

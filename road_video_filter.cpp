@@ -5,12 +5,39 @@ RoadVideoFilterRunnable::RoadVideoFilterRunnable(void* rvf) : _rvf(rvf)
     unsigned int nthreads = std::thread::hardware_concurrency();
     std::chrono::milliseconds wait(1000 / nthreads);
 
+    QString path = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+    QString tmp = "tmp.svm";
+    QDir dir(path);
+
     for (auto i = signs.begin(); i != signs.end(); i++)
     {
         dlib::object_detector<image_scanner_type> detector;
 
-        dlib::deserialize(i->detector) >> detector;
+        QFile fileIn(i->detector);
+
+        if (!fileIn.open(QIODevice::ReadOnly))
+        {
+            qDebug() << fileIn.errorString() << ": " << i->detector;
+            continue ;
+        }
+
+        QFile fileOut(path + "/" + tmp);
+
+        if (!fileOut.open(QIODevice::ReadWrite) )
+        {
+            qDebug() << fileIn.errorString() << ": " << (path + tmp);
+            continue ;
+        }
+
+        fileOut.write(QByteArray(fileIn.readAll()));
+
+        fileOut.close();
+        fileIn.close();
+
+        dlib::deserialize(QString(path + "/" + tmp).toStdString().c_str()) >> detector;
         _detectors.push_back(detector);
+
+        dir.remove(tmp);
     }
 
     for (unsigned int i = 0; i < nthreads; i++)

@@ -18,8 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    traffic_sign_recognition.cpp \
-    road_video_filter.cpp
+        traffic_sign_recognition.cpp \
+        road_video_filter.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,8 +41,7 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
-    transito-cv/svm_detectors/0.svm
+    android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
