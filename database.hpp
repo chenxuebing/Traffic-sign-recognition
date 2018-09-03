@@ -28,7 +28,7 @@ const std::vector<std::vector<QString>> roadDirections = {
 const std::vector<Sign_params_t> signs = {
     {
         0,
-        ":transito-cv/svm_detectors/0.svm",
+        ":detectors/0.svm",
         {
             "Give way",
             "Уступить дорогу",

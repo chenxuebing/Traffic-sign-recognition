@@ -13,6 +13,6 @@
         <file>database/5_icon.png</file>
         <file>database/6_icon.png</file>
         <file>database/7_icon.png</file>
-        <file>transito-cv/svm_detectors/0.svm</file>
+        <file>detectors/0.svm</file>
     </qresource>
 </RCC>
