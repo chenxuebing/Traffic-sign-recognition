@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Window 2.1
 
 ApplicationWindow {
+    id: app
     visible: true
     width: 640
     height: 480
@@ -43,10 +44,5 @@ ApplicationWindow {
 
     Swipe {
         id: swipe_view
-        visible: true
-        onVisibleChanged: {
-            if (visible == true)
-                header.header_name = "Swipe page name"
-        }
     }
 }

@@ -6,13 +6,23 @@
 #include <mutex>
 #include <thread>
 #include <condition_variable>
-#include <chrono>
 #include <unordered_map>
-#include <QFile>
-#include <QDir>
-#include <QStandardPaths>
+#include <QDebug>
+#include <dlib/svm_threaded.h>
+#include <dlib/gui_widgets.h>
+#include <dlib/image_processing.h>
+#include <dlib/data_io.h>
+#include <dlib/image_transforms.h>
+#include <dlib/cmd_line_parser.h>
+#include <dlib/opencv.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <exception>
 
-#include "traffic_sign_recognition.h"
+#include "database.hpp"
+
+typedef dlib::scan_fhog_pyramid<dlib::pyramid_down<6>> image_scanner_type;
 
 class RoadVideoFilterRunnable : public QVideoFilterRunnable
 {
@@ -22,6 +32,8 @@ public:
 
 private:
     void    _detect();
+    void    _tsr(cv::Mat frameGray, cv::Mat& filter);
+    void    _tld(cv::Mat frameGray, cv::Mat& filter);
 
     cv::Mat _filter;
     cv::Mat _frameRGB;

@@ -18,7 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        traffic_sign_recognition.cpp \
         road_video_filter.cpp
 
 RESOURCES += qml.qrc
@@ -47,7 +46,6 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 HEADERS += \
     database.hpp \
-    traffic_sign_recognition.h \
     road_video_filter.h
 
 PKGCONFIG += link_pkgconfig
