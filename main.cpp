@@ -1,5 +1,4 @@
 #include <QApplication>
-//#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
 #include "road_video_filter.h"
