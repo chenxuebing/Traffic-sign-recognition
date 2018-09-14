@@ -3,9 +3,10 @@ import QtQuick.Controls 2.2
 import QtQuick.Window 2.1
 
 ApplicationWindow {
+    id: app
     visible: true
-    width: 480
-    height: 640
+    width: 640
+    height: 480
     title: qsTr("Tabs")
 
     property color header_color: "#303030"
@@ -34,7 +35,7 @@ ApplicationWindow {
 
     header: Header {
         id: header
-        header_name: "Program name"
+        header_name: ""
     }
 
     NavigationDrawer {
@@ -43,32 +44,5 @@ ApplicationWindow {
 
     Swipe {
         id: swipe_view
-        visible: true
-        onVisibleChanged: {
-            if (visible == true)
-                header.header_name = "Swipe page name"
-        }
     }
-
-    SettingsPage {
-        id: settings_page
-        visible: false
-
-        onVisibleChanged: {
-            if (visible == true)
-                header.header_name = "Settings"
-        }
-    }
-
-//    footer: TabBar {
-//        id: tabBar
-//        currentIndex: swipeView.currentIndex
-
-//        TabButton {
-//            text: qsTr("Page 1")
-//        }
-//        TabButton {
-//            text: qsTr("Page 2")
-//        }
-//    }
 }
